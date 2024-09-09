@@ -17,8 +17,8 @@ import {
 
 export function Home() {
     return (
-        <div className="flex flex-col ml-5 mr-5 sm:h-[20rem] justify-around">
-            <div>
+        <div className="flex flex-col gap-4 mt-4 ml-5 mr-5 sm:h-[20rem]">
+            <div className="flex flex-col">
                 <span className="text-lg">Murual</span>
                 <Carousel className="flex flex-col" plugins={[
                     Autoplay({
@@ -39,7 +39,7 @@ export function Home() {
                 </Carousel>
             </div>
 
-            <Carousel className="flex flex-col mt-10" plugins={[
+            <Carousel className="flex flex-col" plugins={[
                     Autoplay({
                         delay: 5000,
                     })
