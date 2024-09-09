@@ -54,15 +54,21 @@ export function AppLayout() {
                         <NavigationMenu>
                             <NavigationMenuList>
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className="bg-muted-foreground/2">
+                                    <NavigationMenuTrigger className="bg-muted-foreground/2 gap-2">
                                         <img src={Relatorio} alt="icon relarorio" />
-                                        <Link className="flex items-center" to={"/relatorio"}>Relatório</Link>
+                                        <p className="flex items-center text-[16px]">Relatório</p>
                                     </NavigationMenuTrigger>
                                     <NavigationMenuContent>
                                         <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[350px] lg:grid-cols-[.75fr_1fr]">
-                                            <NavigationMenuLink><Link to={"/signin"}>Relatório diario</Link></NavigationMenuLink>
-                                            <NavigationMenuLink><Link to={"/"}>Relatório Mensal</Link></NavigationMenuLink>
-                                            <NavigationMenuLink><Link to={"/"}>Gerar PDF</Link></NavigationMenuLink>
+                                            <NavigationMenuLink className="hover:bg-muted-foreground/20 w-full h-[40px] rounded-md flex pl-2 items-center">
+                                                <Link to={"/relatorio_diario"}>Relatório diario</Link>
+                                            </NavigationMenuLink>
+                                            <NavigationMenuLink className="hover:bg-muted-foreground/20 w-full h-[40px] rounded-md flex pl-2 items-center">
+                                                <Link to={"/relatorio_mensal"}>Relatório Mensal</Link>
+                                            </NavigationMenuLink>
+                                            <NavigationMenuLink className="hover:bg-muted-foreground/20 w-full h-[40px] rounded-md flex pl-2 items-center">
+                                                <Link to={"/pdf"}>Gerar PDF</Link>
+                                            </NavigationMenuLink>
                                         </ul>
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
@@ -72,15 +78,15 @@ export function AppLayout() {
 
                     <div className="flex gap-2 items-center ml-4">
                         <img src={Lista} alt="Ico Lista de Códigos" />
-                        <Link to={"/"}>Códigos</Link>
+                        <Link to={"/codigo"}>Códigos</Link>
                     </div>
 
                     <div className="flex gap-2 items-center ml-4">
                         <img src={Dashboard} alt="Ico Lista de Códigos" />
-                        <Link to={"/"}>Dashboard</Link>
+                        <Link to={"/dashboard"}>Dashboard</Link>
                     </div>
                 </div>
-
+                {/* Perfil */}
                 <div className="flex flex-col items-center w-[238px] h-[265px] bg-primary-foreground rounded-lg justify-around">
                     <img src={PerfilDefalt} alt="Foto de perfil" className="w-[103px] h-[103]"/>
                     <p>Marcos Monteiro</p>
@@ -97,6 +103,10 @@ export function AppLayout() {
             <div>
                 <Outlet />
             </div>
+
+            <footer className="col-span-2 bg-primary w-full h-[52px] text-muted flex items-center justify-center">
+                <p>DIREITOS RESERVADOS © W ENGENHARIA LTDA - 2023</p>
+            </footer>
         </div>
     );
 }
