@@ -99,8 +99,9 @@ export function AppLayout() {
                     </div>
                 </div>
             </div>
-
-            <Outlet />
+            <div>
+                <Outlet />
+            </div>
 
             <footer className="col-span-2 bg-primary w-full h-[52px] text-muted flex items-center justify-center">
                 <p>DIREITOS RESERVADOS © W ENGENHARIA LTDA - 2023</p>
