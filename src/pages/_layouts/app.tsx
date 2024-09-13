@@ -9,19 +9,18 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
   } from "@/components/ui/navigation-menu"
 
 import Star from '@/assets/star.svg'
 import Dashboard from '@/assets/dashboard.svg'
 import Relatorio from '@/assets/relatorio.svg'
-import Lista from '@/assets/lista.svg'
 import Home from '@/assets/home.svg'
 import CriarUsuario from '@/assets/criarUsuario.svg'
 import Sair from '@/assets/sair.svg'
 import Perfil from '@/assets/perfil.svg'
 
 import PerfilDefalt from '@/assets/perfilDefalt.png'
+import { CodigoPopover } from "@/components/codigoPopover";
 
 export function AppLayout() {
     return (
@@ -66,9 +65,6 @@ export function AppLayout() {
                                             <NavigationMenuLink className="hover:bg-muted-foreground/20 w-full h-[40px] rounded-md flex pl-2 items-center">
                                                 <Link to={"/relatorio_mensal"}>Relatório Mensal</Link>
                                             </NavigationMenuLink>
-                                            <NavigationMenuLink className="hover:bg-muted-foreground/20 w-full h-[40px] rounded-md flex pl-2 items-center">
-                                                <Link to={"/pdf"}>Gerar PDF</Link>
-                                            </NavigationMenuLink>
                                         </ul>
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
@@ -77,8 +73,7 @@ export function AppLayout() {
                     </div>
 
                     <div className="flex gap-2 items-center ml-4">
-                        <img src={Lista} alt="Ico Lista de Códigos" />
-                        <Link to={"/codigo"}>Códigos</Link>
+                        <CodigoPopover/>
                     </div>
 
                     <div className="flex gap-2 items-center ml-4">
