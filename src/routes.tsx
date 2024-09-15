@@ -6,7 +6,6 @@ import { AppLayout } from "./pages/_layouts/app";
 import { Home } from "./pages/app/home";
 import { RelatorioDiario } from "./pages/app/relatorioD";
 import { RelatorioMensal } from "./pages/app/relatorioM";
-import { Pdf } from "./pages/app/pdf";
 
 const routes = [
     {
@@ -17,7 +16,6 @@ const routes = [
             { path: '/dashboard', element: <Dashboard/> },
             { path: '/relatorio_diario', element: <RelatorioDiario/> },
             { path: '/relatorio_mensal', element: <RelatorioMensal/> },
-            { path: '/pdf', element: <Pdf/> }
         ]
         
     },
