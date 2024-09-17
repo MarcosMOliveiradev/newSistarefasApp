@@ -14,7 +14,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-import Lista from '@/assets/lista.svg'
+import { List } from "lucide-react";
 
 const codigos = [
     {
@@ -154,7 +154,7 @@ export function CodigoPopover() {
     return (
         <Popover >
             <PopoverTrigger className="flex items-center bg-muted-foreground/2">
-                <img src={Lista} alt="Ico Lista de Códigos" />
+                <List className="w-7 h-7"/>
                 <Button variant={"ghost"}>Código</Button>
             </PopoverTrigger>
             <PopoverContent className="flex items-center text-center w-[25rem]">

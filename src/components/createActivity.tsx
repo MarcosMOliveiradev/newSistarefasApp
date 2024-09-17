@@ -30,7 +30,7 @@ export function CreateActivity() {
     }
     return (
         <Dialog>
-            <DialogTrigger asChild>
+            <DialogTrigger asChild className="ml-auto">
                 <Button variant={"ghost"} className="w-[3rem] p-0"><img src={button} alt="Criar nova atividade" /></Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[47rem] h-[30rem] flex flex-col justify-around items-center gap-4 py-4">

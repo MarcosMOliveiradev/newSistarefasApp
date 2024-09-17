@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link, Outlet } from "react-router-dom";
-import { Search } from 'lucide-react'
+import { House, LayoutDashboard, LayoutList, List, Search } from 'lucide-react'
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -12,15 +12,13 @@ import {
   } from "@/components/ui/navigation-menu"
 
 import Star from '@/assets/star.svg'
-import Dashboard from '@/assets/dashboard.svg'
-import Relatorio from '@/assets/relatorio.svg'
-import Home from '@/assets/home.svg'
 import CriarUsuario from '@/assets/criarUsuario.svg'
 import Sair from '@/assets/sair.svg'
 import Perfil from '@/assets/perfil.svg'
 
 import PerfilDefalt from '@/assets/perfilDefalt.png'
 import { CodigoPopover } from "@/components/codigoPopover";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 export function AppLayout() {
     return (
@@ -39,13 +37,15 @@ export function AppLayout() {
                 <div className="flex justify-center items-center gap-2">
                     <img src={Star} alt="Numero de estrelas do selo dourado" />
                     <div className="border border-muted-foreground w-10 h-10 flex justify-center items-center text-[30px]">01</div>
+                    <ThemeToggle/>
                 </div>
+
             </div>
             {/* Menu */}
             <div className="h-full border-r border-muted-foreground bg-muted-foreground/20 flex flex-col justify-around items-center">
                 <div className="flex flex-col gap-3">
                     <div className="flex gap-2 items-center ml-4">
-                        <img src={Home} alt="Ico Home" />
+                        <House className="w-7 h-7"/>
                         <Link to={"/"}>Home</Link>
                     </div>
 
@@ -54,7 +54,7 @@ export function AppLayout() {
                             <NavigationMenuList>
                                 <NavigationMenuItem>
                                     <NavigationMenuTrigger className="bg-muted-foreground/2 gap-2">
-                                        <img src={Relatorio} alt="icon relarorio" />
+                                        <LayoutList className="w-7 h-7"/>
                                         <p className="flex items-center text-[16px]">Relatório</p>
                                     </NavigationMenuTrigger>
                                     <NavigationMenuContent>
@@ -77,7 +77,7 @@ export function AppLayout() {
                     </div>
 
                     <div className="flex gap-2 items-center ml-4">
-                        <img src={Dashboard} alt="Ico Lista de Códigos" />
+                        <LayoutDashboard className="w-7 h-7"/>
                         <Link to={"/dashboard"}>Dashboard</Link>
                     </div>
                 </div>

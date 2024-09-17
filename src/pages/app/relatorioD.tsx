@@ -7,9 +7,8 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { CreateActivity } from '@/components/createActivity'
-import edit from '@/assets/Edit.svg'
-import trash from '@/assets/trash.svg'
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { FilePenLine, Trash2 } from "lucide-react";
 
 const teste = [
     {
@@ -184,10 +183,10 @@ const teste = [
 
 export function RelatorioDiario() {
     return (
-        <div className="flex flex-col items-center w-[95%] gap-5">
+        <div className="flex flex-col items-center px-10 pt-5 w-full gap-5">
             {/* Componente para criar as atividades */}
             <CreateActivity />
-            <ScrollArea className="h-[60vh] overflow-y-auto w-[95%] rounded-md border">
+            <ScrollArea className="h-[60vh] overflow-y-auto w-full rounded-md border">
                 <Table className="text-center">
                     <TableHeader>
                         <TableRow className="text-center">
@@ -214,8 +213,8 @@ export function RelatorioDiario() {
                                 <TableCell>{test.Id_doc}</TableCell>
                                 <TableCell>{test.Inicio}</TableCell>
                                 <TableCell>{test.Termino}</TableCell>
-                                <TableCell className="px-7"><img src={edit} alt="Editar" /></TableCell>
-                                <TableCell className="px-7"><img src={trash} alt="Excluir" /></TableCell>
+                                <TableCell className="px-7"><FilePenLine className="w-7 h-7" /></TableCell>
+                                <TableCell className="px-7"><Trash2 className="w-7 h-7" /></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
