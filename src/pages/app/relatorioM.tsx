@@ -183,7 +183,7 @@ const teste = [
 
 export function RelatorioMensal() {
     return (
-        <ScrollArea className="h-[60vh] overflow-y-auto w-[95%] rounded-md border">
+        <ScrollArea className="mt-4 h-[60vh] overflow-y-auto w-[95%] rounded-md border">
             <Table className="text-center">
                 <TableHeader>
                     <TableRow className="text-center">

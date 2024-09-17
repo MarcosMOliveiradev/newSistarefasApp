@@ -28,6 +28,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
     "react-router-dom": "^6.26.1",
+    "recharts": "^2.12.7",
     "sistarefasapp": "file:",
     "sonner": "^1.5.0",
     "sort-by": "^1.2.0",

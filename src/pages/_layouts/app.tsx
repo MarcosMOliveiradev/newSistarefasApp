@@ -94,11 +94,11 @@ export function AppLayout() {
                     </div>
                 </div>
             </div>
-            <div>
+            <div className="flex flex-col items-center w-full">
                 <Outlet />
             </div>
 
-            <footer className="col-span-2 bg-primary w-full h-[52px] text-muted flex items-center justify-center">
+            <footer className="col-span-2 bg-primary w-full h-[30px] text-[10px] text-muted flex items-center justify-center">
                 <p>DIREITOS RESERVADOS © W ENGENHARIA LTDA - 2023</p>
             </footer>
         </div>
