@@ -157,7 +157,7 @@ export function CodigoPopover() {
                 <List className="w-7 h-7"/>
                 <Button variant={"ghost"}>Código</Button>
             </PopoverTrigger>
-            <PopoverContent className="flex items-center text-center w-[25rem]">
+            <PopoverContent align="start" className="flex items-center text-center w-[25rem]">
                 <ScrollArea className="h-[60vh] overflow-y-auto w-[95%] rounded-md border">
                     <Table>
                         <TableHeader>

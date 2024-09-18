@@ -35,7 +35,7 @@ export function SignIn() {
                 <div className="space-y-2 w-[340px]">
                     <Input id="senha" type="password" placeholder="Senha" {...register('senha')} className="text-[18px]" />
                 </div>
-                <Button disabled={isSubmitted} type="submit" className="w-full" onClick={() => navigate("/") }>dashbord</Button>
+                <Button disabled={isSubmitted} type="submit" className="w-full" onClick={() => navigate("/") }>Entrar</Button>
             </form>
         </div>
     );

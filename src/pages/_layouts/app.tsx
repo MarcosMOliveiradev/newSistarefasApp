@@ -1,7 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link, Outlet } from "react-router-dom";
-import { House, LayoutDashboard, LayoutList, List, Search } from 'lucide-react'
+import { House, LayoutDashboard, LayoutList, Search } from 'lucide-react'
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -19,6 +18,7 @@ import Perfil from '@/assets/perfil.svg'
 import PerfilDefalt from '@/assets/perfilDefalt.png'
 import { CodigoPopover } from "@/components/codigoPopover";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { ButtonFilter } from "@/components/buttonFilter";
 
 export function AppLayout() {
     return (
@@ -32,7 +32,7 @@ export function AppLayout() {
                 <form className="flex justify-center items-center gap-4">
                     <Search className="h-10 w-10 text-muted-foreground"/>
                     <Input id="pesquisar " placeholder=""/>
-                    <Button>Diario</Button>
+                    <ButtonFilter />
                 </form>
                 <div className="flex justify-center items-center gap-2">
                     <img src={Star} alt="Numero de estrelas do selo dourado" />
