@@ -1,6 +1,6 @@
 "use client"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts"
 
 import {
     Card,
@@ -34,8 +34,9 @@ export function MyChart() {
             <CardContent>
                 <ChartContainer className="h-[12rem] w-full" config={config}>
                     <BarChart accessibilityLayer data={data} >
-                        <CartesianGrid vertical={false}  />
+                        <CartesianGrid strokeWidth={2} vertical={false}  />
                         <XAxis dataKey="contagem" tickLine={false} tickMargin={10} axisLine={false}  tickFormatter={(value) => value} />
+                        <YAxis dataKey="total" tickLine={false} tickMargin={10} axisLine={false}  tickFormatter={(value) => value} />
                         <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
                         <Bar dataKey="total"  fill="var(--color-dourado)" radius={8} >
                             <LabelList

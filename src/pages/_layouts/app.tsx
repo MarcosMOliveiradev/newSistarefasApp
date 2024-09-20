@@ -29,11 +29,7 @@ export function AppLayout() {
             </div>
             {/* parte da barra de pesquisa */}
             <div className="h-[70px] border-b border-muted-foreground flex items-center justify-around">
-                <form className="flex justify-center items-center gap-4">
-                    <Search className="h-10 w-10 text-muted-foreground"/>
-                    <Input id="pesquisar " placeholder=""/>
-                    <ButtonFilter />
-                </form>
+                <ButtonFilter />
                 <div className="flex justify-center items-center gap-2">
                     <img src={Star} alt="Numero de estrelas do selo dourado" />
                     <div className="border border-muted-foreground w-10 h-10 flex justify-center items-center text-[30px]">01</div>
