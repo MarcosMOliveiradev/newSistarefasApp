@@ -6,6 +6,16 @@ import { AppLayout } from "./pages/_layouts/app";
 import { Home } from "./pages/app/home";
 import { RelatorioDiario } from "./pages/app/relatorioD";
 import { RelatorioMensal } from "./pages/app/relatorioM";
+import { StorageUserGet } from "./storage/StorageUser";
+
+async function authRoute() {
+    const user = await StorageUserGet()
+
+    let pag = 1;
+    user.id ? pag = 0 : pag = 1;
+
+    return pag
+}
 
 const routes = [
     {
@@ -25,7 +35,9 @@ const routes = [
     }
 ]
 
+const pag = await authRoute()
+
 export const router = createMemoryRouter(routes, {
     initialEntries: ["/", "/signin"],
-    initialIndex: 1,
+    initialIndex: pag,
 })

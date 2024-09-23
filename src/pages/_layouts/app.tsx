@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import { Link, Outlet } from "react-router-dom";
 import { House, LayoutDashboard, LayoutList, Search } from 'lucide-react'
 import {
@@ -19,8 +18,10 @@ import PerfilDefalt from '@/assets/perfilDefalt.png'
 import { CodigoPopover } from "@/components/codigoPopover";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { ButtonFilter } from "@/components/buttonFilter";
+import { useAuth } from "@/hooks/useAuth";
 
 export function AppLayout() {
+    const { signOut } = useAuth()
     return (
         <div className="min-h-screen grid grid-rows-[70px_1fr] grid-cols-[275px_1fr]">
             {/* Logo */}
@@ -85,7 +86,7 @@ export function AppLayout() {
 
                     <div className="flex gap-3">
                         <Link to={"/"}><img src={CriarUsuario} alt="Criar novo usuario"/></Link>
-                        <Link to={"/signin"}><img src={Sair} alt="Criar novo usuario"/></Link>
+                        <Link onClick={signOut} to={"/signin"}><img src={Sair} alt="Criar novo usuario"/></Link>
                         <Link to={"/"}><img src={Perfil} alt="Criar novo usuario"/></Link>
                     </div>
                 </div>

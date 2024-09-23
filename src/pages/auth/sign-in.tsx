@@ -5,21 +5,43 @@ import { toast } from 'sonner'
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/useAuth";
+import { AppErrors } from "@/utils/appErrors";
+import { useState } from "react";
 
 const signInForm = z.object({
-    matricula: z.number(),
-    senha: z.string()
+    matricula: z.string(),
+    password: z.string()
 })
 
 type SignInForm = z.infer<typeof signInForm>
 
 export function SignIn() {
-    const { register, handleSubmit, formState: { isSubmitted } } = useForm<SignInForm>()
+    const [isLoad, setIsLoad] = useState(false)
+    const { register, handleSubmit } = useForm<SignInForm>()
     const navigate = useNavigate()
+    const { signIn } = useAuth()
 
     async function handleSignIn(data: SignInForm) {
-        console.log(data.matricula)
-        // toast.error('erro')
+        const matricula = parseInt(data.matricula)
+        try {
+            setIsLoad(true)
+            await signIn({
+                matricula,
+                password: data.password
+            })
+
+            navigate('/')
+        } catch (err) {
+            const isAppErro = err instanceof AppErrors;
+
+            setIsLoad(false)
+
+            const title = isAppErro ? err.message : "Não foi possivel entrar. Tente novamente mias tarde"
+            toast.error(
+                title
+            )
+        }
     }
 
     return (
@@ -33,9 +55,9 @@ export function SignIn() {
                     <Input id="matricula" type="number" placeholder="Matricula" {...register('matricula')} className="text-[18px]" />
                 </div>
                 <div className="space-y-2 w-[340px]">
-                    <Input id="senha" type="password" placeholder="Senha" {...register('senha')} className="text-[18px]" />
+                    <Input id="senha" type="password" placeholder="Senha" {...register('password')} className="text-[18px]" />
                 </div>
-                <Button disabled={isSubmitted} type="submit" className="w-full" onClick={() => navigate("/") }>Entrar</Button>
+                <Button disabled={isLoad} type="submit" className="w-full">Entrar</Button>
             </form>
         </div>
     );
