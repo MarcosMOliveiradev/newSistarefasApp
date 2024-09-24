@@ -15,142 +15,31 @@ import {
 } from "@/components/ui/table"
 
 import { List } from "lucide-react";
-
-const codigos = [
-    {
-        codigo: 101,
-        setor: "Secretaria",
-        descricao: "Xerox"
-    },
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    {
-		codigo: 104,
-		setor: "SECRETARIA",
-		descricao: "ENCADERNAÇÃO DIVERSAS",
-	},
-    
-]
+import { useCallback, useEffect, useState } from "react";
+import { codigoDTO } from "@/dtos/codigoDTO";
+import { AppErrors } from "@/utils/appErrors";
+import { toast } from "sonner";
+import { api } from "@/lib/axios";
 
 export function CodigoPopover() {
+	const [code, setCode] = useState<codigoDTO[]>([])
+
+	async function getCode() {
+		try {
+			const { data } = await api.get('/tasck/')
+			setCode(data)
+		} catch (err) {
+			const isAppError = err instanceof AppErrors;
+			const title = isAppError ? err.message : "Não foi possível se conectar com o sistema, tente novamente em instantes"
+			toast.error(title)
+		}
+	}
+
+	useEffect(
+		useCallback(() => {
+            getCode()
+        }, [])
+	)
     return (
         <Popover >
             <PopoverTrigger className="flex items-center bg-muted-foreground/2">
@@ -168,7 +57,7 @@ export function CodigoPopover() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {codigos.map((codigo) => (
+                            {code.map((codigo) => (
                                 <TableRow>
                                     <TableCell>{codigo.codigo}</TableCell>
                                     <TableCell>{codigo.setor}</TableCell>

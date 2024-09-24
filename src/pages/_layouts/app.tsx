@@ -1,13 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
-import { House, LayoutDashboard, LayoutList, Search } from 'lucide-react'
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-  } from "@/components/ui/navigation-menu"
+import { House, LayoutDashboard } from 'lucide-react'
 
 import Star from '@/assets/star.svg'
 import CriarUsuario from '@/assets/criarUsuario.svg'
@@ -19,9 +11,11 @@ import { CodigoPopover } from "@/components/codigoPopover";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { ButtonFilter } from "@/components/buttonFilter";
 import { useAuth } from "@/hooks/useAuth";
+import { Relatorio } from "@/components/relatorio";
 
+// TODO: criar componentes para refatorar esse arquivo
 export function AppLayout() {
-    const { signOut } = useAuth()
+    const { signOut, user } = useAuth()
     return (
         <div className="min-h-screen grid grid-rows-[70px_1fr] grid-cols-[275px_1fr]">
             {/* Logo */}
@@ -45,28 +39,9 @@ export function AppLayout() {
                         <House className="w-7 h-7"/>
                         <Link to={"/"}>Home</Link>
                     </div>
-
+                    {/* componente de Relatorio */}
                     <div>
-                        <NavigationMenu>
-                            <NavigationMenuList>
-                                <NavigationMenuItem>
-                                    <NavigationMenuTrigger className="bg-muted-foreground/2 gap-2">
-                                        <LayoutList className="w-7 h-7"/>
-                                        <p className="flex items-center text-[16px]">Relatório</p>
-                                    </NavigationMenuTrigger>
-                                    <NavigationMenuContent>
-                                        <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[350px] lg:grid-cols-[.75fr_1fr]">
-                                            <NavigationMenuLink className="hover:bg-muted-foreground/20 w-full h-[40px] rounded-md flex pl-2 items-center">
-                                                <Link to={"/relatorio_diario"}>Relatório diario</Link>
-                                            </NavigationMenuLink>
-                                            <NavigationMenuLink className="hover:bg-muted-foreground/20 w-full h-[40px] rounded-md flex pl-2 items-center">
-                                                <Link to={"/relatorio_mensal"}>Relatório Mensal</Link>
-                                            </NavigationMenuLink>
-                                        </ul>
-                                    </NavigationMenuContent>
-                                </NavigationMenuItem>
-                            </NavigationMenuList>
-                        </NavigationMenu>
+                        <Relatorio></Relatorio>
                     </div>
 
                     <div className="flex gap-2 items-center ml-4">
@@ -79,13 +54,13 @@ export function AppLayout() {
                     </div>
                 </div>
                 {/* Perfil */}
-                <div className="flex flex-col items-center w-[238px] h-[265px] bg-primary-foreground rounded-lg justify-around">
-                    <img src={PerfilDefalt} alt="Foto de perfil" className="w-[103px] h-[103]"/>
-                    <p>Marcos Monteiro</p>
-                    <p>984</p>
+                <div className="flex flex-col items-center w-[238px] h-[265px] bg-primary-foreground rounded-lg justify-center gap-3">
+                    <img src={user.userAvata ? user.userAvata : PerfilDefalt} alt="Foto de perfil" className="w-[103px] h-[103] rounded-full"/>
+                    <p>{user.nome}</p>
+                    <p>{user.matricula}</p>
 
-                    <div className="flex gap-3">
-                        <Link to={"/"}><img src={CriarUsuario} alt="Criar novo usuario"/></Link>
+                    <div className="flex gap-2">
+                        {user.permission ? <Link to={"/"}><img src={CriarUsuario} alt="Criar novo usuario"/></Link> : <></>}
                         <Link onClick={signOut} to={"/signin"}><img src={Sair} alt="Criar novo usuario"/></Link>
                         <Link to={"/"}><img src={Perfil} alt="Criar novo usuario"/></Link>
                     </div>
@@ -95,7 +70,7 @@ export function AppLayout() {
                 <Outlet />
             </div>
 
-            <footer className="col-span-2 bg-primary w-full h-[30px] text-[10px] text-muted flex items-center justify-center">
+            <footer className="col-span-2 bg-primary-foreground w-full h-[30px] text-[10px] text-muted-foreground flex items-center justify-center">
                 <p>DIREITOS RESERVADOS © W ENGENHARIA LTDA - 2023</p>
             </footer>
         </div>

@@ -9,7 +9,7 @@ export function App() {
   return (
     <>
       <ThemeProvider storageKey="SisTarefasThem" defaultTheme="system">
-        <Toaster richColors position="top-center"/>
+        <Toaster closeButton richColors position="top-center"/>
         <AuthContextProvider>
           <RouterProvider router={router} />
         </AuthContextProvider>
