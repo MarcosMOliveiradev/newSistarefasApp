@@ -6,188 +6,18 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import { CreateActivity } from '@/components/createActivity'
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { FilePenLine, Key, Trash2 } from "lucide-react";
-import { useState } from "react";
+  import { ScrollArea } from "@radix-ui/react-scroll-area";
+  import { FilePenLine } from "lucide-react";
+  import { useState } from "react";
+  import { useForm } from "react-hook-form";
+  import { z } from "zod";
+  
+  import { CreateActivity } from '@/components/createActivity'
 import { Input } from "@/components/ui/input";
-import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { activityDTO } from "@/dtos/activityDTO";
 import { api } from "@/lib/axios";
-import test from "node:test";
-
-const teste = [
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    },
-    {
-        Data: "19/02/24",
-        Item: "01",
-        Codigo: "601",
-        Setor: "Refeitório",
-        Descricao: "Baixa de nota fiscal do refeitório",
-        Id_doc: "1206",
-        Inicio: "13:06",
-        Termino: "13:08",
-        Edit: "e",
-        Delete: "X"
-    }
-]
+import { DeleteButton } from "@/components/deleteButton";
 
 const dataSchema = z.object({
     data: z.string()
@@ -240,8 +70,14 @@ export function RelatorioDiario() {
                                 <TableCell>{activity.id_documento}</TableCell>
                                 <TableCell>{activity.hora_inicio}</TableCell>
                                 <TableCell>{activity.hora_termino}</TableCell>
-                                <TableCell className="px-7"><FilePenLine className="w-7 h-7" /></TableCell>
-                                <TableCell className="px-7"><Trash2 className="w-7 h-7" /></TableCell>
+                                <TableCell >
+                                    <Button variant={"ghost"} className="w-full">
+                                        <FilePenLine className="w-7 h-7" />
+                                    </Button>
+                                </TableCell>
+                                <TableCell>
+                                    <DeleteButton id={activity.id}/>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
