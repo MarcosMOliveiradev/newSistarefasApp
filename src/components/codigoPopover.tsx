@@ -15,33 +15,20 @@ import {
 } from "@/components/ui/table"
 
 import { List } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
-import { codigoDTO } from "@/dtos/codigoDTO";
-import { AppErrors } from "@/utils/appErrors";
-import { toast } from "sonner";
-import { api } from "@/lib/axios";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getCode } from "@/api/get-code";
 
 export function CodigoPopover() {
-	const [code, setCode] = useState<codigoDTO[]>([])
+    const [open, setIsOpne] = useState(false)
 
-	async function getCode() {
-		try {
-			const { data } = await api.get('/tasck/')
-			setCode(data)
-		} catch (err) {
-			const isAppError = err instanceof AppErrors;
-			const title = isAppError ? err.message : "Não foi possível se conectar com o sistema, tente novamente em instantes"
-			toast.error(title)
-		}
-	}
+    const { data: code} = useQuery({
+        queryKey: ['code'],
+        queryFn: getCode
+    })
 
-	useEffect(
-		useCallback(() => {
-            getCode()
-        }, [])
-	)
     return (
-        <Popover >
+        <Popover open={open} onOpenChange={setIsOpne}>
             <PopoverTrigger className="flex items-center bg-muted-foreground/2">
                 <List className="w-7 h-7"/>
                 <Button variant={"ghost"}>Código</Button>
@@ -57,7 +44,7 @@ export function CodigoPopover() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {code.map((codigo) => (
+                            {code?.map((codigo) => (
                                 <TableRow>
                                     <TableCell>{codigo.codigo}</TableCell>
                                     <TableCell>{codigo.setor}</TableCell>

@@ -10,12 +10,16 @@ import PerfilDefalt from '@/assets/perfilDefalt.png'
 import { CodigoPopover } from "@/components/codigoPopover";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { ButtonFilter } from "@/components/buttonFilter";
-import { useAuth } from "@/hooks/useAuth";
 import { Relatorio } from "@/components/relatorio";
+import { useQuery } from "@tanstack/react-query";
+import { getProfile } from "@/api/get-profile";
 
 // TODO: criar componentes para refatorar esse arquivo
 export function AppLayout() {
-    const { signOut, user } = useAuth()
+    const { data } = useQuery({
+        queryKey: ['profile'],
+        queryFn: getProfile
+    })
     return (
         <div className="min-h-screen grid grid-rows-[70px_1fr] grid-cols-[275px_1fr]">
             {/* Logo */}
@@ -55,13 +59,13 @@ export function AppLayout() {
                 </div>
                 {/* Perfil */}
                 <div className="flex flex-col items-center w-[238px] h-[265px] bg-primary-foreground rounded-lg justify-center gap-3">
-                    <img src={user.userAvata ? user.userAvata : PerfilDefalt} alt="Foto de perfil" className="w-[103px] h-[103] rounded-full"/>
-                    <p>{user.nome}</p>
-                    <p>{user.matricula}</p>
+                    <img src={data?.userAvata ? data.userAvata : PerfilDefalt} alt="Foto de perfil" className="w-[103px] h-[103] rounded-full"/>
+                    <p>{data?.nome}</p>
+                    <p>{data?.matricula}</p>
 
                     <div className="flex gap-2">
-                        {user.permission ? <Link to={"/"}><img src={CriarUsuario} alt="Criar novo usuario"/></Link> : <></>}
-                        <Link onClick={signOut} to={"/signin"}><img src={Sair} alt="Criar novo usuario"/></Link>
+                        {data?.permission ? <Link to={"/"}><img src={CriarUsuario} alt="Criar novo usuario"/></Link> : <></>}
+                        <Link to={"/signin"}><img src={Sair} alt="Criar novo usuario"/></Link>
                         <Link to={"/"}><img src={Perfil} alt="Criar novo usuario"/></Link>
                     </div>
                 </div>

@@ -5,9 +5,9 @@ import { toast } from 'sonner'
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import { signIn } from "@/api/sign-in";
 import { AppErrors } from "@/utils/appErrors";
-import { useState } from "react";
 
 const signInForm = z.object({
     matricula: z.string(),
@@ -17,30 +17,22 @@ const signInForm = z.object({
 type SignInForm = z.infer<typeof signInForm>
 
 export function SignIn() {
-    const [isLoad, setIsLoad] = useState(false)
     const { register, handleSubmit } = useForm<SignInForm>()
     const navigate = useNavigate()
-    const { signIn } = useAuth()
+
+    const { mutateAsync: authetication } = useMutation({
+        mutationFn: signIn,
+    })
 
     async function handleSignIn(data: SignInForm) {
         const matricula = parseInt(data.matricula)
         try {
-            setIsLoad(true)
-            await signIn({
-                matricula,
-                password: data.password
-            })
-
+            await authetication({ matricula, password: data.password })
             navigate('/')
         } catch (err) {
-            const isAppErro = err instanceof AppErrors;
-
-            setIsLoad(false)
-
-            const title = isAppErro ? err.message : "Não foi possivel entrar. Tente novamente mias tarde"
-            toast.error(
-                title
-            )
+            const isAppError = err instanceof AppErrors
+            const title = isAppError ? err.message : 'Falha no login'
+            toast.error(title)
         }
     }
 
@@ -57,7 +49,7 @@ export function SignIn() {
                 <div className="space-y-2 w-[340px]">
                     <Input id="senha" type="password" placeholder="Senha" {...register('password')} className="text-[18px]" />
                 </div>
-                <Button disabled={isLoad} type="submit" className="w-full">Entrar</Button>
+                <Button type="submit" className="w-full">Entrar</Button>
             </form>
         </div>
     );

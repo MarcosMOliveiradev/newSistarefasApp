@@ -6,11 +6,12 @@ import { AppLayout } from "./pages/_layouts/app";
 import { Home } from "./pages/app/home";
 import { RelatorioDiario } from "./pages/app/relatorioD";
 import { RelatorioMensal } from "./pages/app/relatorioM";
-import { StorageUserGet } from "./storage/StorageUser";
+import { userDTO } from "./dtos/userDTO";
+
+const data = localStorage.getItem('@SisTarefasUser')
+const user: userDTO = data ? JSON.parse(data) : {}
 
 async function authRoute() {
-    const user = await StorageUserGet()
-
     let pag = 1;
     user.id ? pag = 0 : pag = 1;
 

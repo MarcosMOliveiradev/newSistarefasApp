@@ -8,36 +8,43 @@ import {
   } from "@/components/ui/table"
   import { ScrollArea } from "@radix-ui/react-scroll-area";
   import { FilePenLine } from "lucide-react";
-  import { useState } from "react";
   import { useForm } from "react-hook-form";
   import { z } from "zod";
   
   import { CreateActivity } from '@/components/createActivity'
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { activityDTO } from "@/dtos/activityDTO";
-import { api } from "@/lib/axios";
 import { DeleteButton } from "@/components/deleteButton";
+import { useQuery } from "@tanstack/react-query";
+import { getActivity } from "@/api/getActivity";
+import { useState } from "react";
 
 const dataSchema = z.object({
     data: z.string()
 })
 
+
+
 type DataSchema = z.infer<typeof dataSchema>
 
 export function RelatorioDiario() {
-    const [activities, setActivity] = useState<activityDTO[]>([])
     const { register, handleSubmit } = useForm<DataSchema>()
+    const [selectData, setSelectData] = useState<string | null>(null)
 
-    async function getActivity({ data }: DataSchema) {
-        const response = await api.get('/atividade/data', { params: {data: `${data}`}})
-        setActivity(response.data)
+    const { data: activities } = useQuery({
+        queryKey: ['atividade', selectData],
+        queryFn: async () => await getActivity(selectData!)
+    })
+
+    async function handlegetActivity({ data }: DataSchema) {
+        setSelectData(data)
     }
+
     return (
         <div className="flex flex-col items-center px-10 pt-5 w-full gap-5">
             {/* Componente para criar as atividades */}
             <div className="flex ml-auto gap-4">
-                <form onSubmit={handleSubmit(getActivity)} className="flex gap-3">
+                <form onSubmit={handleSubmit(handlegetActivity)} className="flex gap-3">
                     <Input type="text" placeholder="Data da atividade" {...register("data")} />
                     <Button variant={"outline"} type="submit">Pesquisar</Button>
                 </form>
@@ -60,8 +67,8 @@ export function RelatorioDiario() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {activities.map((activity) => (
-                            <TableRow id={activity.id}>
+                        {activities?.map((activity: any) => (
+                            <TableRow key={activity.id}>
                                 <TableCell>{activity.data}</TableCell>
                                 <TableCell>{activity.index_atividade_tarefa}</TableCell>
                                 <TableCell>{activity.Tarefas.codigo}</TableCell>
