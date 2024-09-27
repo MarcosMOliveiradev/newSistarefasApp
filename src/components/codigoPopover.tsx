@@ -17,14 +17,14 @@ import {
 import { List } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getCode } from "@/api/get-code";
+import { getCodes } from "@/api/get-codes";
 
 export function CodigoPopover() {
     const [open, setIsOpne] = useState(false)
 
     const { data: code} = useQuery({
         queryKey: ['code'],
-        queryFn: getCode
+        queryFn: getCodes
     })
 
     return (

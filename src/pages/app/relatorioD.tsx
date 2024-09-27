@@ -18,6 +18,7 @@ import { DeleteButton } from "@/components/deleteButton";
 import { useQuery } from "@tanstack/react-query";
 import { getActivity } from "@/api/getActivity";
 import { useState } from "react";
+import { TableSkeleton } from "@/components/skeleton/tableSkeleton";
 
 const dataSchema = z.object({
     data: z.string()
@@ -31,7 +32,7 @@ export function RelatorioDiario() {
     const { register, handleSubmit } = useForm<DataSchema>()
     const [selectData, setSelectData] = useState<string | null>(null)
 
-    const { data: activities } = useQuery({
+    const { data: activities, isLoading } = useQuery({
         queryKey: ['atividade', selectData],
         queryFn: async () => await getActivity(selectData!)
     })
@@ -67,7 +68,9 @@ export function RelatorioDiario() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {activities?.map((activity: any) => (
+                        {
+                            isLoading ? ( <TableSkeleton /> ) :
+                            activities?.map((activity: any) => (
                             <TableRow key={activity.id}>
                                 <TableCell>{activity.data}</TableCell>
                                 <TableCell>{activity.index_atividade_tarefa}</TableCell>

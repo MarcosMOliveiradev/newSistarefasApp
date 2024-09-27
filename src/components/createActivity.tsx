@@ -11,10 +11,14 @@ import {
 } from "@/components/ui/dialog"
 
 import button from '@/assets/criarUsuario.svg'
+import { useMutation } from "@tanstack/react-query";
+import { createActivity } from "@/api/create-activity";
+import { toast } from "sonner";
+import { AppErrors } from "@/utils/appErrors";
 
 const relatorioSchema = z.object({
-    data: z.date(),
-    codigoTarefa: z.number(),
+    data: z.string(),
+    codigoTarefa: z.string(),
     idDocumento: z.string(),
     quantidadeFolhas: z.string(),
     horaInicio: z.string(),
@@ -24,10 +28,30 @@ const relatorioSchema = z.object({
 type RelatorioSchema = z.infer<typeof relatorioSchema>
 
 export function CreateActivity() {
-    const { register, handleSubmit, formState: { isSubmitted } } = useForm<RelatorioSchema>()
-    async function createActiveti(data: RelatorioSchema) {
-        console.log(data)
+    const { register, handleSubmit } = useForm<RelatorioSchema>()
+    const { mutateAsync: creation } = useMutation({
+        mutationFn: createActivity
+    })
+
+    async function create({ data, codigoTarefa, horaInicio, horaTermino, idDocumento, quantidadeFolhas }: RelatorioSchema) {
+        const code = parseInt(codigoTarefa)
+        try {
+            await creation({
+                data,
+                codigoTarefa: code,
+                horaInicio,
+                horaTermino,
+                idDocumento,
+                quantidadeFolhas
+            })
+            toast.success('Atividade Criada com sucesso')
+        } catch (err) {
+            const isAppError = err instanceof AppErrors
+            const title = isAppError ? err.message : 'Falha na criação'
+            toast.error(title)
+        }
     }
+    
     return (
         <Dialog>
             <DialogTrigger asChild className="ml-auto">
@@ -37,18 +61,20 @@ export function CreateActivity() {
                 <DialogHeader>
                     <DialogTitle className="text-[2rem]">Cadastro de atividades</DialogTitle>
                 </DialogHeader>
-                <form onSubmit={handleSubmit(createActiveti)} className="grid grid-cols-3 gap-10 py-10">
+                <form onSubmit={handleSubmit(create)} className="grid grid-cols-3 gap-10 py-10">
                     <div>
-                        <Input placeholder="Data" type="date" {...register('data')}></Input>
+                        <Input placeholder="Data" type="string" {...register('data')}></Input>
                     </div>
                     <div>
-                        <Input type="number" placeholder="Código de atividade" {...register('codigoTarefa')}></Input>
+                        <Input type="string" placeholder="Código de atividade"
+                            {...register('codigoTarefa')}>
+                        </Input>
                     </div>
                     <div>
-                        <Input type="text" placeholder="Setor" readOnly></Input>
+                        <Input type="text" placeholder={"Setor"} readOnly></Input>
                     </div>
                     <div className="col-span-2">
-                        <Input type="text" placeholder="Descrição da atividade" readOnly></Input>
+                        <Input type="text" placeholder={"Descrição da atividade"}readOnly></Input>
                     </div>
                     <div>
                         <Input type="text" placeholder="Id Documento" {...register('idDocumento')}></Input>
@@ -62,7 +88,7 @@ export function CreateActivity() {
                     <div>
                         <Input type="text" placeholder="Hora de termino" {...register('horaTermino')}></Input>
                     </div>
-                    <Button disabled={isSubmitted} type="submit" className="col-start-2">Salvar</Button>
+                    <Button type="submit" className="col-start-2">Salvar</Button>
                 </form>
             </DialogContent>
         </Dialog>
