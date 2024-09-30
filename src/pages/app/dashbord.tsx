@@ -1,4 +1,5 @@
 import PerfilDefalt from '@/assets/perfilDefalt.png'
+import { TotalAtividadeMes } from '@/components/dashboard/totaAtividadeMes';
 import { MyChart } from '@/components/myChart';
 
 export function Dashboard() {
@@ -24,10 +25,7 @@ export function Dashboard() {
                     <h3 className='text-center'>Tempo total de atividades no mês</h3>
                     <p>12:01:13</p>
                 </div>
-                <div className="flex flex-col justify-center items-center bg-orange w-[12rem] h-[6rem] rounded-lg text-primary gap-2">
-                    <h3 className='text-center'>Total de atividades no mês</h3>
-                    <p>180</p>
-                </div>
+                <TotalAtividadeMes />
             </div>
 
             <div className='col-span-2'>

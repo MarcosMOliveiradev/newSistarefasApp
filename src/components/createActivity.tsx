@@ -66,16 +66,9 @@ export function CreateActivity() {
                         <Input placeholder="Data" type="string" {...register('data')}></Input>
                     </div>
                     <div>
-                        <Input type="string" placeholder="Código de atividade"
-                            {...register('codigoTarefa')}>
-                        </Input>
+                        <Input type="string" placeholder="Código de atividade" {...register('codigoTarefa')}></Input>
                     </div>
-                    <div>
-                        <Input type="text" placeholder={"Setor"} readOnly></Input>
-                    </div>
-                    <div className="col-span-2">
-                        <Input type="text" placeholder={"Descrição da atividade"}readOnly></Input>
-                    </div>
+                    
                     <div>
                         <Input type="text" placeholder="Id Documento" {...register('idDocumento')}></Input>
                     </div>

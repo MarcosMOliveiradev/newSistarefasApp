@@ -31,9 +31,6 @@ export function TableSkeleton() {
         <TableCell>
             <Skeleton className="w-[80px] h-5" />
         </TableCell>
-        <TableCell>
-            <Skeleton className="w-[80px] h-5" />
-        </TableCell>
     </TableRow>
     
   );
